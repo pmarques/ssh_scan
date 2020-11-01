@@ -50,6 +50,18 @@ matrix:
       - docker build -t mozilla/ssh_scan .
       - docker run -it mozilla/ssh_scan /app/spec/ssh_scan/integration.sh
   - rvm: 2.7.2
+    arch:
+      - amd64
+    env:
+      - LABEL=docker_build_and_push
+    services:
+      - docker
+    script:
+      - chmod u+x ./build_and_deploy_to_dockerhub.sh
+      - ./build_and_deploy_to_dockerhub.sh
+  - rvm: 2.7.2
+    arch:
+      - arm64
     env:
       - LABEL=docker_build_and_push
     services:
