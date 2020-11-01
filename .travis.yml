@@ -4,6 +4,9 @@ git:
 before_install:
   - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
   - git submodule update --init --recursive
+  - mkdir -vp ~/.docker/cli-plugins/
+  - curl --silent -L "https://github.com/docker/buildx/releases/download/v0.3.0/buildx-v0.3.0.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
+  - chmod a+x ~/.docker/cli-plugins/docker-buildx
 matrix:
   include:
   - rvm: ruby-head
@@ -55,5 +58,6 @@ matrix:
     services:
       - docker
     script:
+      - docker buildx version
       - chmod u+x ./build_and_deploy_to_dockerhub.sh
       - ./build_and_deploy_to_dockerhub.sh
