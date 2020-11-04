@@ -1,13 +1,9 @@
 language: ruby
-dist: focal
 git:
   submodules: false
 before_install:
   - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
   - git submodule update --init --recursive
-  - mkdir -vp ~/.docker/cli-plugins/
-  - curl --silent -L "https://github.com/docker/buildx/releases/download/v0.3.0/buildx-v0.3.0.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
-  - chmod a+x ~/.docker/cli-plugins/docker-buildx
 matrix:
   include:
   - rvm: ruby-head
@@ -54,6 +50,13 @@ matrix:
       - docker build -t mozilla/ssh_scan .
       - docker run -it mozilla/ssh_scan /app/spec/ssh_scan/integration.sh
   - rvm: 2.7.2
+    dist: focal
+    before_install:
+      - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+      - git submodule update --init --recursive
+      - mkdir -vp ~/.docker/cli-plugins/
+      - curl --silent -L "https://github.com/docker/buildx/releases/download/v0.3.0/buildx-v0.3.0.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
+      - chmod a+x ~/.docker/cli-plugins/docker-buildx
     env:
       - LABEL=docker_build_and_push
     services:
