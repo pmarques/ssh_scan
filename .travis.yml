@@ -68,5 +68,9 @@ matrix:
       - docker version
       - docker buildx version
       - docker buildx ls
+      - docker buildx create --name nubuilder
+      - docker buildx use nubuilder
+      - docker buildx inspect --bootstrap
+      - docker buildx ls
       - chmod u+x ./build_and_deploy_to_dockerhub.sh
       - ./build_and_deploy_to_dockerhub.sh
